@@ -1,6 +1,5 @@
 "./Core/Src/clock.o"
 "./Core/Src/main.o"
-"./Core/Src/project.o"
 "./Core/Src/devices/GPIO.o"
 "./Core/Src/devices/SysClock.o"
 "./Core/Src/devices/UART.o"
