@@ -26,8 +26,10 @@ void GPIO_Init(void)
 	__HAL_RCC_GPIOH_CLK_ENABLE();
 	__HAL_RCC_GPIOA_CLK_ENABLE();
 	__HAL_RCC_GPIOB_CLK_ENABLE();
-
-	/*Configure GPIO pin : PtPin */
+	__HAL_RCC_GPIOA_CLK_ENABLE(); // Enable GPIOA clock
+	__HAL_RCC_GPIOA_CLK_ENABLE(); // Enable GPIOA clock
+	__HAL_RCC_GPIOA_CLK_ENABLE(); // Enable GPIOA clock
+	__HAL_RCC_TIM2_CLK_ENABLE();  // Enable TIM2 clock	/*Configure GPIO pin : PtPin */
 	GPIO_InitStruct.Pin = B1_Pin;
 	GPIO_InitStruct.Mode = GPIO_MODE_IT_FALLING;
 	GPIO_InitStruct.Pull = GPIO_NOPULL;
@@ -38,13 +40,14 @@ void GPIO_Init(void)
 	GPIO_InitStruct.Pull = GPIO_PULLDOWN;
 	HAL_GPIO_Init(S1_GPIO_Port, &GPIO_InitStruct);
 
-	/* EXTI15_10_IRQn interrupt init*/
-	// Note you will have to add EXTI15_10_IRQn Interrupt handler function as well
-	// This is the interrupt handler for the blue button
+	GPIO_InitStruct.Pin = GPIO_PIN_0;
+	GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+	GPIO_InitStruct.Pull = GPIO_NOPULL;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	GPIO_InitStruct.Alternate = GPIO_AF1_TIM2;
+
+	HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
 
-	/* EXTI9_5_IRQn interrupt init*/
-	// Note you will have to add EXTI9_15_IRQn Interrupt handler function as well
-	// This is the interrupt handler for the external buttons (S1)
 }
 

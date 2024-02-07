@@ -6,20 +6,20 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
 ../Core/Src/devices/GPIO.c \
-../Core/Src/devices/SysClock.c \
 ../Core/Src/devices/UART.c \
+../Core/Src/devices/clock.c \
 ../Core/Src/devices/led.c 
 
 OBJS += \
 ./Core/Src/devices/GPIO.o \
-./Core/Src/devices/SysClock.o \
 ./Core/Src/devices/UART.o \
+./Core/Src/devices/clock.o \
 ./Core/Src/devices/led.o 
 
 C_DEPS += \
 ./Core/Src/devices/GPIO.d \
-./Core/Src/devices/SysClock.d \
 ./Core/Src/devices/UART.d \
+./Core/Src/devices/clock.d \
 ./Core/Src/devices/led.d 
 
 
@@ -30,7 +30,7 @@ Core/Src/devices/%.o Core/Src/devices/%.su Core/Src/devices/%.cyclo: ../Core/Src
 clean: clean-Core-2f-Src-2f-devices
 
 clean-Core-2f-Src-2f-devices:
-	-$(RM) ./Core/Src/devices/GPIO.cyclo ./Core/Src/devices/GPIO.d ./Core/Src/devices/GPIO.o ./Core/Src/devices/GPIO.su ./Core/Src/devices/SysClock.cyclo ./Core/Src/devices/SysClock.d ./Core/Src/devices/SysClock.o ./Core/Src/devices/SysClock.su ./Core/Src/devices/UART.cyclo ./Core/Src/devices/UART.d ./Core/Src/devices/UART.o ./Core/Src/devices/UART.su ./Core/Src/devices/led.cyclo ./Core/Src/devices/led.d ./Core/Src/devices/led.o ./Core/Src/devices/led.su
+	-$(RM) ./Core/Src/devices/GPIO.cyclo ./Core/Src/devices/GPIO.d ./Core/Src/devices/GPIO.o ./Core/Src/devices/GPIO.su ./Core/Src/devices/UART.cyclo ./Core/Src/devices/UART.d ./Core/Src/devices/UART.o ./Core/Src/devices/UART.su ./Core/Src/devices/clock.cyclo ./Core/Src/devices/clock.d ./Core/Src/devices/clock.o ./Core/Src/devices/clock.su ./Core/Src/devices/led.cyclo ./Core/Src/devices/led.d ./Core/Src/devices/led.o ./Core/Src/devices/led.su
 
 .PHONY: clean-Core-2f-Src-2f-devices
 

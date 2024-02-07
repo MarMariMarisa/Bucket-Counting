@@ -1,9 +1,45 @@
-#include "SysClock.h"
+#include "clock.h"
+void Clock_Init(void){
+	// disable input capture to configure
+	TIM2->CCER &= ~(TIM_CCER_CC1E);
+	// Load the prescaler value into the TIM2->PSC register
+	TIM2->PSC = 3;
+	TIM2->EGR |= TIM_EGR_UG;
 
-//******************************************************************************************
-// Switch the PLL source from MSI to HSI, and select the PLL as SYSCLK source.
-//******************************************************************************************
-void System_Clock_Init(void){
+	// Enable clock for TIM2
+	RCC->AHB1ENR |= RCC_AHB2ENR_GPIOAEN;
+	RCC->APB1ENR1 |= RCC_APB1ENR1_TIM2EN;
+
+
+	// configure input capture for channel 1 for rising edge
+	TIM2->CCMR1 &= ~(TIM_CCMR1_CC1S_0 | TIM_CCMR1_CC1S_1);
+	TIM2->CCMR1 |= TIM_CCMR1_CC1S_0;
+	TIM2->CCMR1 &= ~TIM_CCMR1_IC1F;
+
+	// Set input capture for rising edge
+	TIM2->CCER &= ~TIM_CCER_CC1P; // Clear CC1P bit for rising edge detection on channel 1
+
+	TIM2->CCER |= TIM_CCER_CC1E;
+	// set it for alternative channel
+	GPIOA->MODER &= ~(3UL << (0 * 2));
+	GPIOA->MODER |= (2 << (0 * 2));
+	GPIOA->AFR[0] &= ~(0xF << (0 * 4));
+	GPIOA->AFR[0] |= (1 << (0 * 4));
+
+	// enable timer counter
+
+	TIM2->CR1 |= TIM_CR1_CEN;
+
+	// Clear all pending interrupts
+	TIM2->SR = 0;
+
+
+	// Generate an update event to immediately update the prescaler value
+
+	//
+	TIM2->CR1 |= TIM_CR1_CEN;
+
+	RCC->CR |= ((uint32_t)RCC_CR_HSION);
 	
 	uint32_t HSITrim;
 
@@ -78,26 +114,12 @@ void System_Clock_Init(void){
 	RCC->PLLSAI1CFGR |= RCC_PLLSAI1CFGR_PLLSAI1P;
 	RCC->PLLSAI1CFGR |= RCC_PLLSAI1CFGR_PLLSAI1PEN;
 	
-	// SAI1PLL division factor for PLL48M2CLK (48 MHz clock)
-	// RCC->PLLSAI1CFGR &= ~RCC_PLLSAI1CFGR_PLLSAI1Q;
-	// RCC->PLLSAI1CFGR |= U<<21;
-	// RCC->PLLSAI1CFGR |= RCC_PLLSAI1CFGR_PLLSAI1QEN;
-	
-	// PLLSAI1 division factor for PLLADC1CLK (ADC clock)
-	// 00: PLLSAI1R = 2, 01: PLLSAI1R = 4, 10: PLLSAI1R = 6, 11: PLLSAI1R = 8
-	// RCC->PLLSAI1CFGR &= ~RCC_PLLSAI1CFGR_PLLSAI1R; 
-	// RCC->PLLSAI1CFGR |= U<<25;
-	// RCC->PLLSAI1CFGR |= RCC_PLLSAI1CFGR_PLLSAI1REN;
 	
 	RCC->CR |= RCC_CR_PLLSAI1ON;  // SAI1 PLL enable
 	while ( (RCC->CR & RCC_CR_PLLSAI1ON) == 0);
 	
-	// SAI1 clock source selection
-	// 00: PLLSAI1 "P" clock (PLLSAI1CLK) selected as SAI1 clock
-	// 01: PLLSAI2 "P" clock (PLLSAI2CLK) selected as SAI1 clock
-	// 10: PLL "P" clock (PLLSAI3CLK) selected as SAI1 clock
-	// 11: External input SAI1_EXTCLK selected as SAI1 clock	
 	RCC->CCIPR &= ~RCC_CCIPR_SAI1SEL;
 
 	RCC->APB2ENR |= RCC_APB2ENR_SAI1EN;
 }
+

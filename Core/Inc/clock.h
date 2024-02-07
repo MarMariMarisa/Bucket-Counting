@@ -1,13 +1,11 @@
-/*
- * clock.h
- *
- *  Created on: Jul 16, 2021
- *      Author: rickweil
- */
+#ifndef __NUCLEO476_CLOCK_H
+#define __NUCLEO476_CLOCK_H
 
-#ifndef INC_CLOCK_H_
-#define INC_CLOCK_H_
+#include "stm32l476xx.h"
 
-void clock_init(void);
+void Clock_Init(void);
 
-#endif /* INC_CLOCK_H_ */
+#endif /* __NUCLEO476_CLOCK_H */
+
+
+

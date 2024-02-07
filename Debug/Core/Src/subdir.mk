@@ -5,15 +5,12 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
-../Core/Src/clock.c \
 ../Core/Src/main.c 
 
 OBJS += \
-./Core/Src/clock.o \
 ./Core/Src/main.o 
 
 C_DEPS += \
-./Core/Src/clock.d \
 ./Core/Src/main.d 
 
 
@@ -24,7 +21,7 @@ Core/Src/%.o Core/Src/%.su Core/Src/%.cyclo: ../Core/Src/%.c Core/Src/subdir.mk
 clean: clean-Core-2f-Src
 
 clean-Core-2f-Src:
-	-$(RM) ./Core/Src/clock.cyclo ./Core/Src/clock.d ./Core/Src/clock.o ./Core/Src/clock.su ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su
+	-$(RM) ./Core/Src/main.cyclo ./Core/Src/main.d ./Core/Src/main.o ./Core/Src/main.su
 
 .PHONY: clean-Core-2f-Src
 
