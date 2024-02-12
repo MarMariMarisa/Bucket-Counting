@@ -1,4 +1,4 @@
-Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/led.h ../Core/Inc/UART.h \
+Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/UART.h \
  ../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l476xx.h \
  ../Drivers/CMSIS/Include/core_cm4.h \
  ../Drivers/CMSIS/Include/cmsis_version.h \
@@ -8,7 +8,6 @@ Core/Src/main.o: ../Core/Src/main.c ../Core/Inc/led.h ../Core/Inc/UART.h \
  ../Drivers/CMSIS/Device/ST/STM32L4xx/Include/system_stm32l4xx.h \
  ../Core/Inc/printf.h ../Core/Inc/clock.h ../Core/Inc/GPIO.h \
  ../Core/Inc/main.h
-../Core/Inc/led.h:
 ../Core/Inc/UART.h:
 ../Drivers/CMSIS/Device/ST/STM32L4xx/Include/stm32l476xx.h:
 ../Drivers/CMSIS/Include/core_cm4.h:

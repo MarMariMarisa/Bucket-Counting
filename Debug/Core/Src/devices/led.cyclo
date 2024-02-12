@@ -1,3 +1,0 @@
-../Core/Src/devices/led.c:19:6:led_init	1
-../Core/Src/devices/led.c:33:6:led_set	2
-../Core/Src/devices/led.c:41:7:led_isOn	1

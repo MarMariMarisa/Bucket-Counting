@@ -3,13 +3,13 @@ void Clock_Init(void){
 	// disable input capture to configure
 	TIM2->CCER &= ~(TIM_CCER_CC1E);
 	// Load the prescaler value into the TIM2->PSC register
-	TIM2->PSC = 3;
+
 	TIM2->EGR |= TIM_EGR_UG;
 
-	// Enable clock for TIM2
+//	 Enable clock for TIM2
 	RCC->AHB1ENR |= RCC_AHB2ENR_GPIOAEN;
 	RCC->APB1ENR1 |= RCC_APB1ENR1_TIM2EN;
-
+	TIM2->PSC = 79;
 
 	// configure input capture for channel 1 for rising edge
 	TIM2->CCMR1 &= ~(TIM_CCMR1_CC1S_0 | TIM_CCMR1_CC1S_1);
