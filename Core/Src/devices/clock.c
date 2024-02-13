@@ -1,14 +1,14 @@
 #include "clock.h"
 void Clock_Init(void){
-	// disable input capture to configure
+	// Disable input capture to configure
 	TIM2->CCER &= ~(TIM_CCER_CC1E);
-	// Load the prescaler value into the TIM2->PSC register
 
 	TIM2->EGR |= TIM_EGR_UG;
 
-//	 Enable clock for TIM2
+	//Enable clock for TIM2
 	RCC->AHB1ENR |= RCC_AHB2ENR_GPIOAEN;
 	RCC->APB1ENR1 |= RCC_APB1ENR1_TIM2EN;
+	//Load the prescaler value into the TIM2->PSC register
 	TIM2->PSC = 79;
 
 	// configure input capture for channel 1 for rising edge
@@ -20,13 +20,13 @@ void Clock_Init(void){
 	TIM2->CCER &= ~TIM_CCER_CC1P; // Clear CC1P bit for rising edge detection on channel 1
 
 	TIM2->CCER |= TIM_CCER_CC1E;
-	// set it for alternative channel
+	// Set it for alternative channel
 	GPIOA->MODER &= ~(3UL << (0 * 2));
 	GPIOA->MODER |= (2 << (0 * 2));
 	GPIOA->AFR[0] &= ~(0xF << (0 * 4));
 	GPIOA->AFR[0] |= (1 << (0 * 4));
 
-	// enable timer counter
+	// Enable timer counter
 
 	TIM2->CR1 |= TIM_CR1_CEN;
 
@@ -35,8 +35,6 @@ void Clock_Init(void){
 
 
 	// Generate an update event to immediately update the prescaler value
-
-	//
 	TIM2->CR1 |= TIM_CR1_CEN;
 
 	RCC->CR |= ((uint32_t)RCC_CR_HSION);
@@ -44,8 +42,8 @@ void Clock_Init(void){
 	uint32_t HSITrim;
 
 	// To correctly read data from FLASH memory, the number of wait states (LATENCY)
-  // must be correctly programmed according to the frequency of the CPU clock
-  // (HCLK) and the supply voltage of the device.		
+	//must be correctly programmed according to the frequency of the CPU clock
+	//(HCLK) and the supply voltage of the device.
 	FLASH->ACR &= ~FLASH_ACR_LATENCY;
 	FLASH->ACR |=  FLASH_ACR_LATENCY_2WS;
 		
@@ -55,7 +53,7 @@ void Clock_Init(void){
 	// Adjusts the Internal High Speed oscillator (HSI) calibration value
 	// RC oscillator frequencies are factory calibrated by ST for 1 % accuracy at 25oC
 	// After reset, the factory calibration value is loaded in HSICAL[7:0] of RCC_ICSCR	
-	HSITrim = 16; // user-programmable trimming value that is added to HSICAL[7:0] in ICSCR.
+	HSITrim = 16;
 	RCC->ICSCR &= ~RCC_ICSCR_HSITRIM;
 	RCC->ICSCR |= HSITrim << 24;
 	

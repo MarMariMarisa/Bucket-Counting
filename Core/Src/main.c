@@ -22,16 +22,19 @@ struct bucket {
 
 int power_on_self_test(void){
 	 uint32_t start_time = TIM2->CNT;
-	 // 100 milliseconds in microseconds
+	 //100 milliseconds in microseconds
 	 uint32_t timeout = 100000;
 	 int pulse_detected = 0;
 
-	    // wait for a pulse or timeout
+	 //Wait for a pulse or timeout
 	 while ((TIM2->CNT - start_time) < timeout) {
-	    if (TIM2->SR & TIM_SR_CC1IF) { // Check if the capture/compare interrupt flag is set
+		//Check if the capture/compare interrupt flag is set
+	    if (TIM2->SR & TIM_SR_CC1IF) {
 	    	pulse_detected = 1;
-	        TIM2->SR &= ~TIM_SR_CC1IF; // Clear the interrupt flag
-	        break; // Exit the loop if a pulse is detected
+	    	//Clear the interrupt flag
+	        TIM2->SR &= ~TIM_SR_CC1IF;
+	        //Exit the loop if a pulse is detected
+	        break;
 	    }
 	 }
 	 return pulse_detected;
@@ -149,14 +152,22 @@ int main(void){
     			    TIM2->SR &= ~TIM_SR_CC1IF;
     			    }
     	}
-
+    	int is_buckets = 0;
+    	//Print out all buckets that had a count grater than 0
     	for(int i = 0;i<100;i++){
     			printf("\033[0;32m");
     			if(buckets[i].count != 0){
+    				is_buckets = 1;
     			printf("\r\n%d%s%d\r\n",buckets[i].bucket_num," ",buckets[i].count);
 
     			}
     	}
+    	//If no buckers exist within the range print error
+    	if(is_buckets == 0){
+    		printf("\033[0;31m");
+    		printf("No buckets detected within the entered range");
+    	}
+
     }
 }
 
